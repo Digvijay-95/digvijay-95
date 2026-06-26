@@ -1,5 +1,5 @@
 <h1 align="center">Hi there, I'm Digvijay Mahamuni 👋</h1>
-<h3 align="center">Backend Engineer | AI & LLM Systems | Team Lead</h3>
+<h3 align="center">Backend Engineer | AI & LLM Systems</h3>
 
 <p align="center">
   <a href="https://www.linkedin.com/in/digvijay95"><img src="https://img.shields.io/badge/-LinkedIn-blue?style=flat&logo=Linkedin&logoColor=white"/></a>
@@ -11,21 +11,28 @@
 
 ### 🧑‍💻 About Me
 
-- 🔧 Backend Engineer & Team Lead (7–9 engineers) at **Tata Consultancy Services**, building backend and AI-driven platforms for internal cybersecurity initiatives.
-- 🛡️ Currently building platforms involving **isolated Kubernetes environments**, **AI-powered security tooling (MCP)**, and **DAST enhancement using application context**.
-- 🤖 Deep interest in **AI/LLM systems** — RAG, agentic workflows, MCP, local inference with Ollama.
-- 🏆 Recipient of the **Award of Excellence** at TCS, two years in a row.
-- 🌱 Always learning — exploring how AI agents and tool orchestration can solve real backend and security problems.
+- 🔧 Backend Engineer focused on distributed systems, container orchestration, and AI/LLM-powered platforms.
+- 🛡️ Like understanding systems from the inside — I'd rather hand-roll the Kubernetes mechanics than reach for a fully managed abstraction.
+- 🤖 Deep interest in AI/LLM systems — RAG, agentic workflows, MCP, and local inference with Ollama.
+- 🌱 Currently deep in container orchestration internals — session lifecycles, Pod-level isolation, and idle-resource reaping.
 
 ---
 
-### 🚀 What I'm Working On
+### 🚀 Featured Project: MCP Session Orchestrator
 
-| Project | Description |
-|---|---|
-| **Web Application Hacking Lab** | FastAPI-based intentionally vulnerable app + AWS EKS workflow provisioning isolated, per-user Kubernetes environments for safe, hands-on offensive security practice. |
-| **MCP Penetration Testing Platform** | Backend for an MCP-enabled AI chatbot — lets pentesters run tools like Nmap & Metasploit via natural-language requests instead of manual CLI commands. |
-| **AI-Powered DAST Enhancement** | *(In progress)* Backend for a platform enriching DAST scans (Fortify WebInspect) with application-specific context — functional docs, Selenium flows, ASVS checklists — for more targeted, pentester-like results. |
+A from-scratch container orchestration framework for dynamically provisioning isolated, ephemeral runtime environments for **MCP (Model Context Protocol)** tool servers — built end-to-end without abstracting away the Kubernetes mechanics.
+
+**Core design:**
+- Shared Kubernetes namespace with **Pod-per-(session × selected MCP server)**, instead of a heavier namespace-per-session model.
+- Session-scoped `NetworkPolicy`, keyed by a `session-id` label, replacing full namespace-level isolation.
+- **Redis-backed session registry** with idle-TTL reaping — active sessions get instant routing, idle ones get cleaned up automatically.
+- Readiness checks built on a real MCP `initialize` handshake over streamable HTTP, not just "container is Running."
+- Direct Pod-IP routing for tool calls — no Kubernetes Service objects needed.
+- Structured JSON logging, correlated by session ID across the full provision → serve → reap lifecycle.
+
+**Stack:** Python, FastAPI, Kubernetes Python client / `kr8s`, `redis-py` (async), `httpx` (async), `structlog`, k3s/kind + Calico for local development.
+
+*Status: actively building.*
 
 ---
 
@@ -48,6 +55,7 @@
 
 ![PostgreSQL](https://img.shields.io/badge/-PostgreSQL-336791?style=flat&logo=postgresql&logoColor=white)
 ![MongoDB](https://img.shields.io/badge/-MongoDB-47A248?style=flat&logo=mongodb&logoColor=white)
+![Redis](https://img.shields.io/badge/-Redis-DC382D?style=flat&logo=redis&logoColor=white)
 
 **AI / LLM**
 
